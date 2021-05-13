@@ -34,7 +34,7 @@ public class TipoDirecServiceImpl implements TipoDirecService{
 	@Override
 	@Transactional(readOnly = true)
 	public TipoDirec encontrarTipoDirec(TipoDirec tipoDirec) {
-		return tipoDirecDao.findById(tipoDirec.getIdTipoDir()).orElse(null);
+		return null; /*tipoDirecDao.findById(tipoDirec.getIdTipoDir()).orElse(null);*/
 	}
 
 }

@@ -6,11 +6,11 @@ import com.deltasac.domain.Area;
 
 public interface AreaService {
 
-	public List<Area> listarAreas();
+	List<Area> listarAreas();
 	
-	public void guardarArea(Area area);
+	/*public void guardarArea(Area area);
 	
 	public void eliminarArea(Area area);
 	
-	public Area encontrarArea(Area area);
+	public Area encontrarArea(Area area);*/
 }

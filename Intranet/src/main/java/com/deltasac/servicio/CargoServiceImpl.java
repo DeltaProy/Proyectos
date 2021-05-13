@@ -34,7 +34,8 @@ public class CargoServiceImpl implements CargoService{
 	@Override
 	@Transactional(readOnly = true)
 	public Cargo encontrarCargo(Cargo cargo) {
-		return cargoDao.findById(cargo.getIdCargo()).orElse(null);
+		return null;
+		/*cargoDao.findById(cargo.getIdCargo()).orElse(null);*/
 	}
 
 }

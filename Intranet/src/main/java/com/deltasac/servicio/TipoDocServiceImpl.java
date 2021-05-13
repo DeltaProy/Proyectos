@@ -34,7 +34,7 @@ public class TipoDocServiceImpl implements TipoDocService{
 	@Override
 	@Transactional(readOnly = true)
 	public TipoDoc encontrarTipoDoc(TipoDoc tipoDoc) {
-		return tipoDocDao.findById(tipoDoc.getIdTipoDoc()).orElse(null);
+		return null; /*tipoDocDao.findById(tipoDoc.getIdTipoDoc()).orElse(null);*/
 	}
 
 }

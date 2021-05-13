@@ -1,34 +1,32 @@
 package com.deltasac.domain;
 
-import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.*;
 
-import lombok.Data;
-
-@Data
 @Entity
 @Table(name = "mae_areas")
-public class Area implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
-
+public class Area {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idArea;
-	
 	private String desArea;
 	
-	@OneToMany(mappedBy = "area")
-	private List<Cargo> cargos;
-	
-	public Area () {
+	public Long getIdArea() {
+		return idArea;
+	}
+	public void setIdArea(Long idArea) {
+		this.idArea = idArea;
+	}
+	public String getDesArea() {
+		return desArea;
+	}
+	public void setDesArea(String desArea) {
+		this.desArea = desArea;
 	}
 	
-	public Area (String desArea) {
-		this.desArea = desArea;
+	
+	@Override
+	public String toString() {
+		return "Area [idArea=" + idArea + ", desArea=" + desArea + "]";
 	}
 
 }

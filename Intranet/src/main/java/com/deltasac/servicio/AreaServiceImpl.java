@@ -18,9 +18,9 @@ public class AreaServiceImpl implements AreaService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Area> listarAreas() {
-		return (List<Area>) areaDao.findAll();
+		return areaDao.findAll();
 	}
-
+/*
 	@Override
 	public void guardarArea(Area area) {
 		areaDao.save(area);
@@ -35,6 +35,6 @@ public class AreaServiceImpl implements AreaService{
 	@Transactional(readOnly = true)
 	public Area encontrarArea(Area area) {
 		return areaDao.findById(area.getIdArea()).orElse(null);
-	}
+	}*/
 
 }
