@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.deltasac.api.entity.Direccion;
 import com.deltasac.api.entity.DireccionPK;
 import com.deltasac.api.service.IDireccionesService;
+import com.deltasac.api.service.ITiposDirecService;
+import com.deltasac.api.service.IUbigeosService;
 
 @RestController
 @RequestMapping("/direcciones")
@@ -22,6 +24,10 @@ public class DireccionesController {
 
 	@Autowired
 	private IDireccionesService serviceDireccion;
+	@Autowired
+	private IUbigeosService serviceUbigeo;
+	@Autowired
+	private ITiposDirecService serviceTipoDirec;
 	
 	@GetMapping("/listar")
 	public List<Direccion> buscarTodos(){
@@ -29,21 +35,41 @@ public class DireccionesController {
 	}
 	
 	@PostMapping("/guardar")
-	public Direccion guardar(@RequestBody Direccion direccion) {
-		serviceDireccion.guardar(direccion);
-		return direccion;
+	public Object guardar(@RequestBody Direccion direccion) {
+		if(serviceTipoDirec.buscarPorId(direccion.getIdtipodir()) != null) {
+			if(serviceUbigeo.buscarPorId(direccion.getIdubigeo()) != null) {
+				serviceDireccion.guardar(direccion);
+				return direccion;				
+			}else {
+				return "El idUbigeo no existe en la base de datos";
+			}
+		}else {
+			return "El idTipoDir no existe en la base de datos";
+		}
 	}
 	
 	@PutMapping("/actualizar")
-	public Direccion modificar(@RequestBody Direccion direccion) {
-		serviceDireccion.guardar(direccion);
-		return direccion;
+	public Object modificar(@RequestBody Direccion direccion) {
+		if(serviceTipoDirec.buscarPorId(direccion.getIdtipodir()) != null) {
+			if(serviceUbigeo.buscarPorId(direccion.getIdubigeo()) != null) {
+				serviceDireccion.guardar(direccion);
+				return direccion;				
+			}else {
+				return "El idUbigeo no existe en la base de datos";
+			}
+		}else {
+			return "El idTipoDir no existe en la base de datos";
+		}
 	}
 	
 	@DeleteMapping("/eliminar/{idpersonal}/{nrodir}")
 	public String eliminar(@PathVariable("idpersonal") int idPersonal, @PathVariable("nrodir") int nroDir) {
-		serviceDireccion.eliminar(new DireccionPK(idPersonal, nroDir));
-		return "Registro Eliminado";
+		try {
+			serviceDireccion.eliminar(new DireccionPK(idPersonal, nroDir));
+			return "Registro Eliminado";			
+		} catch (Exception e) {
+			return "El registro con la llave proporcionada no existe o ya fue eliminado";
+		}
 	}
 	
 }

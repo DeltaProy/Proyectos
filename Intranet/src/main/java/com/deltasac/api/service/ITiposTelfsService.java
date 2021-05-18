@@ -9,4 +9,5 @@ public interface ITiposTelfsService {
 	List<TipoTelf> buscarTodos();
 	void guardar(TipoTelf tipoTelf);
 	void eliminar(int idTipoTelf);
+	TipoTelf buscarPorId(Integer idTipoTelf);
 }

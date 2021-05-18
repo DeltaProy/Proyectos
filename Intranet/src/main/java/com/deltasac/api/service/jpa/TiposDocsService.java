@@ -31,4 +31,9 @@ public class TiposDocsService implements ITiposDocsService {
 		
 	}
 
+	@Override
+	public TipoDoc buscarPorId(int idTipoDoc) {
+		return repoTipoDoc.findById(idTipoDoc).orElse(null);
+	}
+
 }

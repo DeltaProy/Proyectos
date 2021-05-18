@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.deltasac.api.entity.Ubigeo;
 import com.deltasac.api.repository.UbigeosRepository;
 import com.deltasac.api.service.IUbigeosService;
 
@@ -32,6 +33,11 @@ public class UbigeosService implements IUbigeosService {
 	@Override
 	public String buscarUbigeo(String departamento, String provincia, String distrito) {
 		return repoUbigeos.buscarUbigeo(departamento, provincia, distrito);
+	}
+
+	@Override
+	public Ubigeo buscarPorId(String idUbigeo) {
+		return repoUbigeos.findById(idUbigeo).orElse(null);
 	}
 	
 	

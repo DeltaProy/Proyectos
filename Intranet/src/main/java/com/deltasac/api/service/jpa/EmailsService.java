@@ -29,6 +29,11 @@ public class EmailsService implements IEmailsService{
 	@Override
 	public void eliminar(EmailPK emailPK) {
 		repoEmail.deleteById(emailPK);
+	}
+
+	@Override
+	public void eliminarPorPersonal(int idPersonal) {
+		repoEmail.eliminarPorPersonal(idPersonal);
 	}	
 
 }

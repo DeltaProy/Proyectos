@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.deltasac.api.entity.Email;
 import com.deltasac.api.entity.EmailPK;
 import com.deltasac.api.service.IEmailsService;
+import com.deltasac.api.service.ITiposEmailsService;
 
 @RestController
 @RequestMapping("/emails")
@@ -23,6 +24,8 @@ public class EmailsController {
 
 	@Autowired
 	private IEmailsService serviceEmail;
+	@Autowired
+	private ITiposEmailsService serviceTipoEmail;
 	
 	@GetMapping("/listar")
 	public List<Email> buscarTodos(){
@@ -30,29 +33,41 @@ public class EmailsController {
 	}
 	
 	@PostMapping("/guardar")
-	public Email guardar(@RequestBody Email email) {
-		if(validarEmail(email.getDiremail())) {
-			serviceEmail.guardar(email);
-			return email;			
+	public Object guardar(@RequestBody Email email) {
+		if(serviceTipoEmail.buscarPorId(email.getIdtipoemail()) != null) {
+			if(validarEmail(email.getDiremail())) {
+				serviceEmail.guardar(email);
+				return email;			
+			}else {
+				return "El email ingresado no es valido";
+			}			
 		}else {
-			return null;
+			return "El idTipoEmail proporcionado no existe en la base de datos";
 		}
 	}
 	
 	@PutMapping("/actualizar")
-	public Email modificar(@RequestBody Email email) {		
-		if(validarEmail(email.getDiremail())) {
-			serviceEmail.guardar(email);
-			return email;
+	public Object modificar(@RequestBody Email email) {		
+		if(serviceTipoEmail.buscarPorId(email.getIdtipoemail()) != null) {
+			if(validarEmail(email.getDiremail())) {
+				serviceEmail.guardar(email);
+				return email;			
+			}else {
+				return "El email ingresado no es valido";
+			}			
 		}else {
-			return null;
+			return "El idTipoEmail proporcionado no existe en la base de datos";
 		}
 	}
 	
 	@DeleteMapping("/eliminar/{idpersonal}/{nroemail}")
 	public String eliminar(@PathVariable("idpersonal") int idPersonal, @PathVariable("nroemail") int nroEmail) {
-		serviceEmail.eliminar(new EmailPK(idPersonal, nroEmail));
-		return "Registro Eliminado";
+		try {
+			serviceEmail.eliminar(new EmailPK(idPersonal, nroEmail));
+			return "Registro Eliminado";			
+		} catch (Exception e) {
+			return "El registro con la llave primaria proporcionada no existe o ya fue eliminado";
+		}
 	}
 	
 	private boolean validarEmail(String email) {

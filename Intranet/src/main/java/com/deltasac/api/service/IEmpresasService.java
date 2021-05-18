@@ -9,4 +9,5 @@ public interface IEmpresasService {
 	List<Empresa> buscarTodos();
 	void guardar(Empresa empresa);
 	void eliminar(int idempresa);
+	Empresa buscarPorId(int idEmpresa);
 }

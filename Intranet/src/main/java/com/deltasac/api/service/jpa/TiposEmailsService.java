@@ -31,4 +31,9 @@ public class TiposEmailsService implements ITiposEmailsService {
 		
 	}
 
+	@Override
+	public TipoEmail buscarPorId(Integer idTipoEmail) {
+		return repoTipoEmail.findById(idTipoEmail).orElse(null);
+	}
+
 }

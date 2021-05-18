@@ -45,7 +45,7 @@ public class Direccion {
 	}
 	public void setIdubigeo(String idubigeo) {
 		this.idubigeo = idubigeo;
-	}
+	}	
 	
 	@Override
 	public String toString() {

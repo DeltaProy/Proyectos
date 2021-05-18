@@ -10,4 +10,5 @@ public interface IEmailsService {
 	List<Email> buscarTodos();
 	void guardar(Email email);
 	void eliminar(EmailPK emailPK);
+	void eliminarPorPersonal(int idPersonal);
 }

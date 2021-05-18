@@ -9,4 +9,5 @@ public interface ITiposDocsService {
 	List<TipoDoc> buscarTodos();
 	void guardar(TipoDoc tipodoc);
 	void eliminar(int idTipoDoc);
+	TipoDoc buscarPorId(int idTipoDoc);
 }

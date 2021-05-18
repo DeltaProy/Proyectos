@@ -29,6 +29,12 @@ public class DireccionesService implements IDireccionesService{
 	@Override
 	public void eliminar(DireccionPK direccionPK) {
 		repoDireccion.deleteById(direccionPK);
-	}	
+	}
 
+	@Override
+	public void eliminarPorPersonal(int idPersonal) {
+		repoDireccion.eliminarPorPersonal(idPersonal);
+	}
+
+	
 }

@@ -10,4 +10,5 @@ public interface ITelefonosService {
 	List<Telefono> buscarTodos();
 	void guardar(Telefono telefono);
 	void eliminar(TelefonoPK telefonoPK);
+	void eliminarPorPersonal(int idPersonal);
 }

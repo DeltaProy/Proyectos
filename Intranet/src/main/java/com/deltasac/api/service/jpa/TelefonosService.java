@@ -29,6 +29,11 @@ public class TelefonosService implements ITelefonosService{
 	@Override
 	public void eliminar(TelefonoPK telefonoPK) {
 		repoTelefono.deleteById(telefonoPK);
+	}
+
+	@Override
+	public void eliminarPorPersonal(int idPersonal) {
+		repoTelefono.eliminarPorPersonal(idPersonal);
 	}	
 
 }

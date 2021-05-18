@@ -30,6 +30,11 @@ public class TiposDirecServiceImpl implements ITiposDirecService{
 		repoTipoDirec.deleteById(idTipoDirec);
 	}
 
+	@Override
+	public TipoDirec buscarPorId(int idTipoDirec) {
+		return repoTipoDirec.findById(idTipoDirec).orElse(null);
+	}
+
 	
 
 }

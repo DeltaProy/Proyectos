@@ -31,4 +31,9 @@ public class TiposTelfsService implements ITiposTelfsService {
 		
 	}
 
+	@Override
+	public TipoTelf buscarPorId(Integer idTipoTelf) {
+		return repoTipoTelf.findById(idTipoTelf).orElse(null);
+	}
+
 }

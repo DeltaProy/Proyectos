@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.deltasac.api.entity.Telefono;
 import com.deltasac.api.entity.TelefonoPK;
 import com.deltasac.api.service.ITelefonosService;
+import com.deltasac.api.service.ITiposTelfsService;
 
 @RestController
 @RequestMapping("/telefonos")
@@ -24,6 +25,8 @@ public class TelefonosController {
 
 	@Autowired
 	private ITelefonosService serviceTelefono;
+	@Autowired
+	private ITiposTelfsService serviceTipoTelf;
 	
 	@GetMapping("/listar")
 	public List<Telefono> buscarTodos(){
@@ -31,29 +34,41 @@ public class TelefonosController {
 	}
 	
 	@PostMapping("/guardar")
-	public Telefono guardar(@RequestBody Telefono telefono) {
-		if(validarDiscado(telefono.getDiscado())) {
-			serviceTelefono.guardar(telefono);
-			return telefono;			
+	public Object guardar(@RequestBody Telefono telefono) {
+		if(serviceTipoTelf.buscarPorId(telefono.getIdtipotelf()) != null) {
+			if(validarDiscado(telefono.getDiscado())) {
+				serviceTelefono.guardar(telefono);
+				return telefono;
+			}else {
+				return "Discado invalido, debe contener solo numeros, guiones y/o parentesis";
+			}			
 		}else {
-			return null;
+			return "El idTipoTelf no existe en la base de datos";
 		}
 	}
 	
 	@PutMapping("/actualizar")
-	public Telefono modificar(@RequestBody Telefono telefono) {
-		if(validarDiscado(telefono.getDiscado())) {
-			serviceTelefono.guardar(telefono);
-			return telefono;			
+	public Object modificar(@RequestBody Telefono telefono) {
+		if(serviceTipoTelf.buscarPorId(telefono.getIdtipotelf()) != null) {
+			if(validarDiscado(telefono.getDiscado())) {
+				serviceTelefono.guardar(telefono);
+				return telefono;
+			}else {
+				return "Discado invalido, debe contener solo numeros, guiones y/o parentesis";
+			}			
 		}else {
-			return null;
+			return "El idTipoTelf no existe en la base de datos";
 		}
 	}
 	
 	@DeleteMapping("/eliminar/{idpersonal}/{nrotelf}")
 	public String eliminar(@PathVariable("idpersonal") int idPersonal, @PathVariable("nrotelf") int nroTelf) {
-		serviceTelefono.eliminar(new TelefonoPK(idPersonal, nroTelf));
-		return "Registro Eliminado";
+		try {
+			serviceTelefono.eliminar(new TelefonoPK(idPersonal, nroTelf));
+			return "Registro Eliminado";			
+		} catch (Exception e) {
+			return "El registro con la llave primaria proporcionada no existe o ya fue eliminado";
+		}
 	}
 	
 	private boolean validarDiscado(String discado) {

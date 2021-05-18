@@ -10,4 +10,5 @@ public interface IDireccionesService {
 	List<Direccion> buscarTodos();
 	void guardar(Direccion direccion);
 	void eliminar(DireccionPK direccionPK);
+	void eliminarPorPersonal(int idPersonal);
 }

@@ -9,4 +9,5 @@ public interface ITiposDirecService {
 	List<TipoDirec> buscarTodos();
 	void guardar(TipoDirec tipoDirec);
 	void eliminar(int idTipoDirec);
+	TipoDirec buscarPorId(int idTipoDirec);
 }

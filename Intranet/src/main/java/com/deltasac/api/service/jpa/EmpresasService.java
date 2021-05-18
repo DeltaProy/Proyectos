@@ -31,4 +31,9 @@ public class EmpresasService implements IEmpresasService {
 		
 	}
 
+	@Override
+	public Empresa buscarPorId(int idEmpresa) {
+		return repoEmpresa.findById(idEmpresa).orElse(null);
+	}
+
 }
