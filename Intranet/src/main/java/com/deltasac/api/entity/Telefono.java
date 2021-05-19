@@ -14,6 +14,7 @@ public class Telefono {
 	private Integer idtipotelf;
 	private String discado;
 	private String nroanexo;
+	private String estadotelefono;
 	
 	public Integer getIdpersonal() {
 		return idpersonal;
@@ -44,13 +45,19 @@ public class Telefono {
 	}
 	public void setNroanexo(String nroanexo) {
 		this.nroanexo = nroanexo;
+	}	
+	public String getEstadotelefono() {
+		return estadotelefono;
 	}
-	
+	public void setEstadotelefono(String estadotelefono) {
+		this.estadotelefono = estadotelefono;
+	}
 	@Override
 	public String toString() {
-		return "Telefonos [idpersonal=" + idpersonal + ", nrotelf=" + nrotelf + ", idtipotelf=" + idtipotelf
-				+ ", discado=" + discado + ", nroanexo=" + nroanexo + "]";
+		return "Telefono [idpersonal=" + idpersonal + ", nrotelf=" + nrotelf + ", idtipotelf=" + idtipotelf
+				+ ", discado=" + discado + ", nroanexo=" + nroanexo + ", estadotelefono=" + estadotelefono + "]";
 	}
+	
 	
 	
 			

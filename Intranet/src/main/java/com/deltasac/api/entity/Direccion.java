@@ -14,6 +14,7 @@ public class Direccion {
 	private Integer idtipodir;
 	private String desdireccion;
 	private String idubigeo;
+	private String estadodireccion;
 	
 	
 	public Integer getIdpersonal() {
@@ -46,12 +47,19 @@ public class Direccion {
 	public void setIdubigeo(String idubigeo) {
 		this.idubigeo = idubigeo;
 	}	
-	
+	public String getEstadodireccion() {
+		return estadodireccion;
+	}
+	public void setEstadodireccion(String estadodireccion) {
+		this.estadodireccion = estadodireccion;
+	}
 	@Override
 	public String toString() {
 		return "Direccion [idpersonal=" + idpersonal + ", nrodir=" + nrodir + ", idtipodir=" + idtipodir
-				+ ", desdireccion=" + desdireccion + ", idubigeo=" + idubigeo + "]";
-	}	
+				+ ", desdireccion=" + desdireccion + ", idubigeo=" + idubigeo + ", estadodireccion=" + estadodireccion
+				+ "]";
+	}
+		
 	
 			
 }

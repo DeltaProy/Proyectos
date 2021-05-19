@@ -18,17 +18,24 @@ public class DireccionesService implements IDireccionesService{
 
 	@Override
 	public List<Direccion> buscarTodos() {
-		return repoDireccion.findAll();
+		return repoDireccion.buscarDirecciones();
 	}
 
 	@Override
 	public void guardar(Direccion direccion) {
+		direccion.setNrodir(repoDireccion.buscarUltimoNrodir(direccion.getIdpersonal()) + 1);
 		repoDireccion.save(direccion);
 	}
 
 	@Override
-	public void eliminar(DireccionPK direccionPK) {
-		repoDireccion.deleteById(direccionPK);
+	public void eliminar(DireccionPK direccionPK) throws Exception {
+		Direccion direc = repoDireccion.findById(direccionPK).orElse(null);
+		if(direc != null && "A".equals(direc.getEstadodireccion())) {
+			direc.setEstadodireccion("E");
+			repoDireccion.save(direc);
+		}else {
+			throw new Exception("Registro no existe o ya fue eliminado");
+		}
 	}
 
 	@Override

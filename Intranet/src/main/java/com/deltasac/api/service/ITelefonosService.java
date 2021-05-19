@@ -9,6 +9,6 @@ public interface ITelefonosService {
 
 	List<Telefono> buscarTodos();
 	void guardar(Telefono telefono);
-	void eliminar(TelefonoPK telefonoPK);
+	void eliminar(TelefonoPK telefonoPK) throws Exception;
 	void eliminarPorPersonal(int idPersonal);
 }

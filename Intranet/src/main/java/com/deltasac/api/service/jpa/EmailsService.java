@@ -18,17 +18,24 @@ public class EmailsService implements IEmailsService{
 
 	@Override
 	public List<Email> buscarTodos() {
-		return repoEmail.findAll();
+		return repoEmail.buscarEmails();
 	}
 
 	@Override
 	public void guardar(Email email) {
+		email.setNroemail(repoEmail.buscarUltimoNroemail(email.getIdpersonal()) + 1);
 		repoEmail.save(email);
 	}
 
 	@Override
-	public void eliminar(EmailPK emailPK) {
-		repoEmail.deleteById(emailPK);
+	public void eliminar(EmailPK emailPK) throws Exception {
+		Email email= repoEmail.findById(emailPK).orElse(null);
+		if(email != null && "A".equals(email.getEstadoemail())) {
+			email.setEstadoemail("E");
+			repoEmail.save(email);
+		}else {
+			throw new Exception("Registro no existe o ya fue eliminado");
+		}
 	}
 
 	@Override

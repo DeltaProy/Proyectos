@@ -13,6 +13,7 @@ public class Email {
 	private Integer nroemail;
 	private Integer idtipoemail;
 	private String diremail;
+	private String estadoemail;
 	
 	public Integer getIdpersonal() {
 		return idpersonal;
@@ -37,12 +38,17 @@ public class Email {
 	}
 	public void setDiremail(String diremail) {
 		this.diremail = diremail;
+	}	
+	public String getEstadoemail() {
+		return estadoemail;
 	}
-	
+	public void setEstadoemail(String estadoemail) {
+		this.estadoemail = estadoemail;
+	}
 	@Override
 	public String toString() {
 		return "Email [idpersonal=" + idpersonal + ", nroemail=" + nroemail + ", idtipoemail=" + idtipoemail
-				+ ", diremail=" + diremail + "]";
+				+ ", diremail=" + diremail + ", estadoemail=" + estadoemail + "]";
 	}
-			
+		
 }

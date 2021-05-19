@@ -18,17 +18,24 @@ public class TelefonosService implements ITelefonosService{
 
 	@Override
 	public List<Telefono> buscarTodos() {
-		return repoTelefono.findAll();
+		return repoTelefono.buscarTelefonos();
 	}
 
 	@Override
 	public void guardar(Telefono telefono) {
+		telefono.setNrotelf(repoTelefono.buscarUltimoNrotelf(telefono.getIdpersonal()) + 1);
 		repoTelefono.save(telefono);
 	}
 
 	@Override
-	public void eliminar(TelefonoPK telefonoPK) {
-		repoTelefono.deleteById(telefonoPK);
+	public void eliminar(TelefonoPK telefonoPK) throws Exception {
+		Telefono telefono = repoTelefono.findById(telefonoPK).orElse(null);
+		if(telefono != null && "A".equals(telefono.getEstadotelefono())) {
+			telefono.setEstadotelefono("E");
+			repoTelefono.save(telefono);
+		}else {
+			throw new Exception("Registro no existe o ya fue eliminado");
+		}
 	}
 
 	@Override

@@ -9,6 +9,6 @@ public interface IEmailsService {
 
 	List<Email> buscarTodos();
 	void guardar(Email email);
-	void eliminar(EmailPK emailPK);
+	void eliminar(EmailPK emailPK) throws Exception;
 	void eliminarPorPersonal(int idPersonal);
 }
