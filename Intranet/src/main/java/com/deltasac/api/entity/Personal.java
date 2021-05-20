@@ -15,6 +15,7 @@ public class Personal {
 	private Integer idempresa;
 	private Integer idarea;
 	private Integer idcargo;
+	private String fotografia;
 	
 	public Integer getIdpersonal() {
 		return idpersonal;
@@ -63,18 +64,18 @@ public class Personal {
 	}
 	public void setIdcargo(Integer idcargo) {
 		this.idcargo = idcargo;
+	}	
+	public String getFotografia() {
+		return fotografia;
 	}
-	
+	public void setFotografia(String fotografia) {
+		this.fotografia = fotografia;
+	}
 	@Override
 	public String toString() {
 		return "Personal [idpersonal=" + idpersonal + ", idtipodoc=" + idtipodoc + ", nrodoc=" + nrodoc + ", nomper="
 				+ nomper + ", apeper=" + apeper + ", idempresa=" + idempresa + ", idarea=" + idarea + ", idcargo="
-				+ idcargo + "]";
+				+ idcargo + ", fotografia=" + fotografia + "]";
 	}
-	
-	
-	
-	
-	
 	
 }
