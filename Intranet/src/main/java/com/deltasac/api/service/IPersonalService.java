@@ -9,4 +9,5 @@ public interface IPersonalService {
 	List<Personal> buscarTodos();
 	void guardar(Personal personal);
 	void eliminar(Integer idPersonal);
+	Personal buscarPorId(int idPersonal);
 }

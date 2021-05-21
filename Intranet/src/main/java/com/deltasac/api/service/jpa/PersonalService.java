@@ -28,6 +28,11 @@ public class PersonalService implements IPersonalService{
 	@Override
 	public void eliminar(Integer idPersonal) {
 		repoPersonal.deleteById(idPersonal);
+	}
+
+	@Override
+	public Personal buscarPorId(int idPersonal) {
+		return repoPersonal.findById(idPersonal).orElse(null);
 	}	
 
 }

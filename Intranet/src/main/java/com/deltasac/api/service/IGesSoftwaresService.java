@@ -11,4 +11,5 @@ public interface IGesSoftwaresService {
 	void guardar(GesSoftware direccion);
 	void eliminar(GesSoftwarePK gesSoftwarePK);
 	void eliminarPorPersonal(int idPersonal);
+	GesSoftware buscarPorId(GesSoftwarePK gesSoftwarePK);
 }

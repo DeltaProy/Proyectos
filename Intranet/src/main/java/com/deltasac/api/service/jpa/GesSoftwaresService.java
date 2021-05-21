@@ -36,5 +36,10 @@ public class GesSoftwaresService implements IGesSoftwaresService{
 		repoGesSoftware.eliminarPorPersonal(idPersonal);
 	}
 
+	@Override
+	public GesSoftware buscarPorId(GesSoftwarePK gesSoftwarePK) {
+		return repoGesSoftware.findById(gesSoftwarePK).orElse(null);
+	}
+
 	
 }

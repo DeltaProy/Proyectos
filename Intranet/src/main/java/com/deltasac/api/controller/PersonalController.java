@@ -1,10 +1,15 @@
 package com.deltasac.api.controller;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.deltasac.api.entity.CargoPK;
 import com.deltasac.api.entity.Personal;
@@ -25,6 +32,7 @@ import com.deltasac.api.service.IGesSoftwaresService;
 import com.deltasac.api.service.IPersonalService;
 import com.deltasac.api.service.ITelefonosService;
 import com.deltasac.api.service.ITiposDocsService;
+import com.deltasac.api.service.jpa.FileStorageService;
 
 @RestController
 @RequestMapping("/personal")
@@ -48,6 +56,8 @@ public class PersonalController {
 	private ITelefonosService serviceTelefono;
 	@Autowired
 	private IGesSoftwaresService serviceGesSoftware;
+	@Autowired
+	private FileStorageService fss;
 	
 	
 	@GetMapping("/listar")
@@ -69,9 +79,6 @@ public class PersonalController {
 		if(serviceCargo.buscarId(new CargoPK(personal.getIdcargo(), personal.getIdarea())) == null) {
 			return "El idCargo no existe en la base de datos";
 		}
-		if(!validarNombreArchivo(personal.getFotografia())) {
-			return "El nombre de archivo del certificado es invalido";
-		}
 		servicePersonal.guardar(personal);
 		return personal;	
 	}
@@ -89,9 +96,6 @@ public class PersonalController {
 		}
 		if(serviceCargo.buscarId(new CargoPK(personal.getIdcargo(), personal.getIdarea())) == null) {
 			return "El idCargo no existe en la base de datos";
-		}
-		if(!validarNombreArchivo(personal.getFotografia())) {
-			return "El nombre de archivo del certificado es invalido";
 		}
 		servicePersonal.guardar(personal);
 		return personal;					
@@ -129,10 +133,57 @@ public class PersonalController {
 		}
 	}
 	
-	private boolean validarNombreArchivo(String nombreArchivo) {
-		Pattern pat= Pattern.compile("^.*(\\.(jpg|jpeg))$");
-		Matcher mat = pat.matcher(nombreArchivo);
-		return mat.find();
+	@PostMapping("/subirfoto/{idpersonal}")
+	public Object subirCertificado(@RequestParam("file") MultipartFile file, @PathVariable("idpersonal") int idPersonal) {
+		Personal personal= servicePersonal.buscarPorId(idPersonal);
+		
+		if(personal == null) {
+			return "Id proporcionado no valido, registro inexistente";
+		}
+		if(!(file.getOriginalFilename().endsWith(".jpg") || file.getOriginalFilename().endsWith(".jpeg"))) {
+			return "Archivo invalido, solo se admite jpg o jpeg";
+		}
+		
+		try {
+			String fileName = fss.uploadFotoPersonal(file);
+			
+			personal.setFotografia(fileName);
+			servicePersonal.guardar(personal);
+			
+			return personal;	
+			
+		} catch (Exception e) {
+			return "Ocurrion un error al guardar certificado";
+		}
+		
+	}
+	
+	@GetMapping("/getfoto/{idpersonal}")
+	public ResponseEntity < Resource > obtenercertificado(@PathVariable("idpersonal") int idPersonal, HttpServletRequest request) throws IOException {
+		Personal personal = servicePersonal.buscarPorId(idPersonal);
+		
+		if(personal == null) {
+			return ResponseEntity.notFound().build();
+		}
+		try {
+			Resource recurso = fss.getFotoPersonal(personal.getFotografia());			
+			String contentType = null;
+			try {
+				contentType = request.getServletContext().getMimeType(recurso.getFile().getAbsolutePath());
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+			if (contentType == null) {
+				contentType = "application/octet-stream";
+			}
+			return ResponseEntity.ok()
+					.contentType(MediaType.parseMediaType(contentType))
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
+					.body(recurso);
+		} catch (Exception e) {
+			
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 }
