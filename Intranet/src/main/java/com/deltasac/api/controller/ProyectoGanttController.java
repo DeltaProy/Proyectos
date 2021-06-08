@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.deltasac.api.entity.ProyectoGantt;
+import com.deltasac.api.service.IPersonalService;
 import com.deltasac.api.service.IProyectosGanttService;
 
 import net.sf.mpxj.Duration;
@@ -35,6 +36,8 @@ public class ProyectoGanttController {
 
 	@Autowired
 	private IProyectosGanttService serviceProyectoGantt;
+	@Autowired
+	private IPersonalService servicePersonal;
 	
 	
 	@GetMapping("/listar")
@@ -44,6 +47,11 @@ public class ProyectoGanttController {
 	//Para guardar o actualizar
 	@PostMapping("/guardar")
 	public Object guardar(@RequestParam("file") MultipartFile file, @RequestParam("idproyecto") Integer idProyecto, @RequestParam("idpersonal") Integer idPersonal) {
+		//Check id personal
+		if(servicePersonal.buscarPorId(idPersonal) == null) {
+			return "El personal con ese id no existe en la base de datos";
+		}
+		
 		ProyectoGantt pg = new ProyectoGantt();
 		
 		try {
