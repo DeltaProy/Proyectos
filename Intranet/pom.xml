@@ -58,6 +58,11 @@
 		    <artifactId>commons-io</artifactId>
 		    <version>2.6</version>
 		</dependency>
+		<dependency>
+		  <groupId>net.sf.mpxj</groupId>
+		  <artifactId>mpxj</artifactId>
+		  <version>9.2.5</version>
+		</dependency>
 	</dependencies>
 
 	<build>
