@@ -10,4 +10,5 @@ public interface IPersonalService {
 	void guardar(Personal personal);
 	void eliminar(Integer idPersonal);
 	Personal buscarPorId(int idPersonal);
+	List<Personal> buscarPorArea(int idarea);
 }

@@ -10,6 +10,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ import com.deltasac.api.service.ITelefonosService;
 import com.deltasac.api.service.ITiposDocsService;
 import com.deltasac.api.service.jpa.FileStorageService;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/personal")
 public class PersonalController {
@@ -63,6 +65,16 @@ public class PersonalController {
 	@GetMapping("/listar")
 	public List<Personal> buscarTodos(){
 		return servicePersonal.buscarTodos();
+	}
+	
+	@GetMapping("/buscar/{id}")
+	public Personal buscarPersonal(@PathVariable("id") int idpersonal){
+		return servicePersonal.buscarPorId(idpersonal);
+	}
+	
+	@GetMapping("/listarArea/{idarea}")
+	public List<Personal> buscarPorArea(@PathVariable("idarea") int idarea){
+		return servicePersonal.buscarPorArea(idarea);
 	}
 	
 	@PostMapping("/guardar")

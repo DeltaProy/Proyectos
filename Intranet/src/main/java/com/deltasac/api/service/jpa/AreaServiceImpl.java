@@ -35,6 +35,11 @@ public class AreaServiceImpl implements IAreaService{
 		return repoArea.findById(idArea).orElse(null);
 	}
 
+	@Override
+	public Area buscarAreaPorIdresponsable(int idResponsable) {
+		return repoArea.buscarAreaPorIdresponsable(idResponsable);
+	}
+
 	
 
 }

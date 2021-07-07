@@ -13,6 +13,7 @@ public class Area {
 	private String desarea;
 	@OneToMany(mappedBy = "idarea", cascade = CascadeType.ALL)
 	private List<Cargo> cargos;
+	private Integer idresponsable;
 	
 	public Integer getIdarea() {
 		return idarea;
@@ -29,11 +30,18 @@ public class Area {
 	public List<Cargo> getCargos(){
 		return cargos;
 	}
-	
-	
+	public Integer getIdresponsable() {
+		return idresponsable;
+	}
+	public void setIdresponsable(Integer idresponsable) {
+		this.idresponsable = idresponsable;
+	}
 	@Override
 	public String toString() {
-		return "Area [idarea=" + idarea + ", desarea=" + desarea + "]";
+		return "Area [idarea=" + idarea + ", desarea=" + desarea + ", cargos=" + cargos + ", idresponsable="
+				+ idresponsable + "]";
 	}
+	
+	
 
 }

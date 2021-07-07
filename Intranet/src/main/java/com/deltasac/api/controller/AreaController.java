@@ -30,6 +30,16 @@ public class AreaController {
 		return serviceArea.buscarTodos();
 	}
 	
+	@GetMapping("/listarArea/{id}")
+	public Area buscarArea(@PathVariable("id") int idarea){
+		return serviceArea.buscarId(idarea);
+	}
+	
+	@GetMapping("/listarAreaxResponsable/{idresponsable}")
+	public Area buscarAreaPorIdresponsable(@PathVariable("idresponsable") int idresponsable){
+		return serviceArea.buscarAreaPorIdresponsable(idresponsable);
+	}
+	
 	@PostMapping("/guardar")
 	public Area guardar(@RequestBody Area area) {
 		serviceArea.guardar(area);

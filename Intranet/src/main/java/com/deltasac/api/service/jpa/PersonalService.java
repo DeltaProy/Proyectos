@@ -33,6 +33,11 @@ public class PersonalService implements IPersonalService{
 	@Override
 	public Personal buscarPorId(int idPersonal) {
 		return repoPersonal.findById(idPersonal).orElse(null);
+	}
+
+	@Override
+	public List<Personal> buscarPorArea(int idarea) {
+		return repoPersonal.listarPorArea(idarea);
 	}	
 
 }

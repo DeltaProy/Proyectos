@@ -10,4 +10,5 @@ public interface IAreaService {
 	void guardar(Area area);
 	void eliminar(int idArea);
 	Area buscarId(int idArea);
+	Area buscarAreaPorIdresponsable(int idResponsable);
 }
