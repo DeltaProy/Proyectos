@@ -8,7 +8,7 @@ import com.deltasac.api.entity.ProyectoTareaPK;
 public interface IProyectoTareasService {
 
 	List<ProyectoTarea> buscarTodos();
-	void guardar(ProyectoTareaPK proyectoTarea);
+	void guardar(ProyectoTarea proyectoTarea);
 	void eliminar(ProyectoTareaPK proyectoTareaPK);
 	void eliminarPorProyecto(int idProyecto);
 	ProyectoTarea buscarPorId(ProyectoTareaPK proyectoTareaPK);

@@ -40,6 +40,6 @@ public class ProyectoTareasService implements IProyectoTareasService{
 	public void eliminarPorProyecto(int idProyecto) {
 		repoProyectoTarea.eliminarPorProyecto(idProyecto);
 		
-	}	
+	}
 
 }

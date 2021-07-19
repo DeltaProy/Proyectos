@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.deltasac.api.entity.ProyectoTarea;
 import com.deltasac.api.entity.ProyectoTareaPK;
 
-public interface ProyectoTareasRepository extends JpaRepository<ProyectoTarea, Integer>{
+public interface ProyectoTareasRepository extends JpaRepository<ProyectoTarea, ProyectoTareaPK>{
 
 	@Transactional
 	@Modifying

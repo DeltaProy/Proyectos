@@ -8,12 +8,14 @@ import com.sun.istack.Nullable;
 
 @Entity
 @Table(name="ges_proy_tareas")
-//@IdClass(value = ProyectoTareaPK.class)
+@IdClass(value = ProyectoTareaPK.class)
 public class ProyectoTarea {
 	
 	@Id
 	private Integer idproyecto;
+	@Id
 	private Integer idpersonal;
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer numtarea;
 	private String destarea;
