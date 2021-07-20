@@ -49,25 +49,29 @@ public class ProyectoTareasController {
 		try {
 			MPPReader mppRead = new MPPReader();
 			ProjectFile pf = mppRead.read(file.getInputStream());
-			
+			int numTarea = 1;
 			//CREAR TAREAS
 			for(Task task: pf.getTasks()) {
 				ProyectoTarea tarea = new ProyectoTarea();
 				tarea.setIdproyecto(idProyecto);
 				String nombreRecurso = "";
 				try {
-					nombreRecurso = task.getResourceAssignments().get(0).getResource().getName();										
+					nombreRecurso = task.getResourceAssignments().get(0).getResource().getName();
 				} catch (Exception e) {
+					continue;
 				}
+				
 				tarea.setIdpersonal(serviceProyectoHomologados.buscarPorId(new ProyectoHomologadoPK(idProyecto, nombreRecurso)).getIdpersonal());
+				tarea.setNumtarea(numTarea);
 				tarea.setDestarea(task.getName());
 				tarea.setFecini(task.getStart());
 				tarea.setFecfin(task.getFinish());
 				tarea.setFecfin_real(task.getActualFinish());
 				tarea.setPorc_avance((Double) task.getPercentageWorkComplete());
-				
-				
+
+				System.out.println(tarea);
 				serviceProyectoTareas.guardar(tarea);
+				numTarea++;
 			}
 			
 			return "Tareas creadas";
@@ -78,6 +82,7 @@ public class ProyectoTareasController {
 		return "Error al guardar proyecto";
 	}
 	
+	//no es necesario, guardar hace la misma accion
 	@PostMapping("/actualizar")
 	public Object actualizar(@RequestParam("file") MultipartFile file, @RequestParam("idproyecto") Integer idProyecto) {
 		serviceProyectoTareas.eliminarPorProyecto(idProyecto);
@@ -85,16 +90,19 @@ public class ProyectoTareasController {
 			MPPReader mppRead = new MPPReader();
 			ProjectFile pf = mppRead.read(file.getInputStream());
 			
+			int numTarea = 1;
 			//CREAR TAREAS
 			for(Task task: pf.getTasks()) {
 				ProyectoTarea tarea = new ProyectoTarea();
 				tarea.setIdproyecto(idProyecto);
 				String nombreRecurso = "";
 				try {
-					nombreRecurso = task.getResourceAssignments().get(0).getResource().getName();										
+					nombreRecurso = task.getResourceAssignments().get(0).getResource().getName();
 				} catch (Exception e) {
+					continue;
 				}
 				tarea.setIdpersonal(serviceProyectoHomologados.buscarPorId(new ProyectoHomologadoPK(idProyecto, nombreRecurso)).getIdpersonal());
+				tarea.setNumtarea(numTarea);
 				tarea.setDestarea(task.getName());
 				tarea.setFecini(task.getStart());
 				tarea.setFecfin(task.getFinish());
@@ -102,9 +110,10 @@ public class ProyectoTareasController {
 				tarea.setPorc_avance((Double) task.getPercentageWorkComplete());
 				
 				serviceProyectoTareas.guardar(tarea);
+				numTarea++;
 			}
 			
-			return "Tareas creadas";
+			return "Tareas actualizadas";
 			
 		} catch (MPXJException | IOException e) {
 			// TODO Auto-generated catch block

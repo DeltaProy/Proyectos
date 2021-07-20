@@ -16,7 +16,6 @@ public class ProyectoTarea {
 	@Id
 	private Integer idpersonal;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer numtarea;
 	private String destarea;
 	private Date fecini;
