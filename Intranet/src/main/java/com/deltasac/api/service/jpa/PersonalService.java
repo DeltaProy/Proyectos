@@ -38,6 +38,11 @@ public class PersonalService implements IPersonalService{
 	@Override
 	public List<Personal> buscarPorArea(int idarea) {
 		return repoPersonal.listarPorArea(idarea);
+	}
+
+	@Override
+	public Personal buscarPorNombre(String nomper, String apeper) {
+		return repoPersonal.buscarPorNombre(nomper, apeper);
 	}	
 
 }

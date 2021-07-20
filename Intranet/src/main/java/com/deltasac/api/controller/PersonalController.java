@@ -72,6 +72,11 @@ public class PersonalController {
 		return servicePersonal.buscarPorId(idpersonal);
 	}
 	
+	@GetMapping("/buscar/{nomper}/{apeper}")
+	public Personal buscarPersonalPorNombre(@PathVariable("nomper") String nomper, @PathVariable("apeper") String apeper){
+		return servicePersonal.buscarPorNombre(nomper, apeper);
+	}
+	
 	@GetMapping("/listarArea/{idarea}")
 	public List<Personal> buscarPorArea(@PathVariable("idarea") int idarea){
 		return servicePersonal.buscarPorArea(idarea);

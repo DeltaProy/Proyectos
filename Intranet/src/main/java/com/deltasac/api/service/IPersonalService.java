@@ -10,5 +10,6 @@ public interface IPersonalService {
 	void guardar(Personal personal);
 	void eliminar(Integer idPersonal);
 	Personal buscarPorId(int idPersonal);
+	Personal buscarPorNombre(String nomper, String apeper);
 	List<Personal> buscarPorArea(int idarea);
 }

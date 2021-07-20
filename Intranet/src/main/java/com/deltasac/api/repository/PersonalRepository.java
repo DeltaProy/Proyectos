@@ -10,4 +10,7 @@ public interface PersonalRepository extends JpaRepository<Personal, Integer>{
 
 	@Query("SELECT p FROM Personal p WHERE p.idarea = ?1")
 	public List<Personal> listarPorArea(int idarea);
+	
+	@Query("SELECT p FROM Personal p WHERE p.nomper = ?1 AND p.apeper = ?2")
+	public Personal buscarPorNombre(String nomper, String apeper);
 }
