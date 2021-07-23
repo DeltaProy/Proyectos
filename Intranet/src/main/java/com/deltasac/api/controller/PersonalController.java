@@ -35,7 +35,7 @@ import com.deltasac.api.service.ITelefonosService;
 import com.deltasac.api.service.ITiposDocsService;
 import com.deltasac.api.service.jpa.FileStorageService;
 
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/personal")
 public class PersonalController {

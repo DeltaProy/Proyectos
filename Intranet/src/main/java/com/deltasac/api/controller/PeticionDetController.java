@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.deltasac.api.entity.PeticionDet;
 import com.deltasac.api.service.IPeticionDetService;
 
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/peticionDet")
 public class PeticionDetController {
