@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.deltasac.api.service.IUbigeosService;
 
+@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/ubigeos")
 public class UbigeosController {
