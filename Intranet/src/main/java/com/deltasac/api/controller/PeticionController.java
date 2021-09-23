@@ -20,7 +20,6 @@ import com.deltasac.api.service.IAreaService;
 import com.deltasac.api.service.IPeticionDetService;
 import com.deltasac.api.service.IPeticionService;
 
-@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/peticion")
 public class PeticionController {

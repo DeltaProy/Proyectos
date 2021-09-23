@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.deltasac.api.entity.Empresa;
 import com.deltasac.api.service.IEmpresasService;
 
-@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/empresas")
 public class EmpresasController {

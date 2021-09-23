@@ -33,6 +33,16 @@ public class ProyectosService implements IProyectosService{
 	@Override
 	public Proyecto buscarPorId(int idProyecto) {
 		return repoProyecto.findById(idProyecto).orElse(null);
+	}
+
+	@Override
+	public Proyecto buscarPorNombre(String nombreProyecto) {
+		return repoProyecto.buscarPorNombre(nombreProyecto);
+	}
+
+	@Override
+	public List<Proyecto> listarProyectosPorResponsable(int idresponsable) {
+		return repoProyecto.listarProyectosPorResponsable(idresponsable);
 	}	
 
 }

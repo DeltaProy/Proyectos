@@ -30,7 +30,6 @@ import net.sf.mpxj.ProjectFile;
 import net.sf.mpxj.Task;
 import net.sf.mpxj.mpp.MPPReader;
 
-@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/proyectoTareas")
 public class ProyectoTareasController {
@@ -46,8 +45,9 @@ public class ProyectoTareasController {
 		return serviceProyectoTareas.buscarTodos();
 	}
 	
+	
 	@PostMapping("/guardar")
-	public Object guardar(@RequestParam("file") MultipartFile file, @RequestParam("idproyecto") Integer idProyecto) {
+	public String guardar(@RequestParam("file") MultipartFile file, @RequestParam("idproyecto") Integer idProyecto) {
 		try {
 			MPPReader mppRead = new MPPReader();
 			ProjectFile pf = mppRead.read(file.getInputStream());
@@ -62,7 +62,6 @@ public class ProyectoTareasController {
 				} catch (Exception e) {
 					continue;
 				}
-				
 				tarea.setIdpersonal(serviceProyectoHomologados.buscarPorId(new ProyectoHomologadoPK(idProyecto, nombreRecurso)).getIdpersonal());
 				tarea.setNumtarea(numTarea);
 				tarea.setDestarea(task.getName());
@@ -71,12 +70,12 @@ public class ProyectoTareasController {
 				tarea.setFecfin_real(task.getActualFinish());
 				tarea.setPorc_avance((Double) task.getPercentageWorkComplete());
 
-				System.out.println(tarea);
 				serviceProyectoTareas.guardar(tarea);
 				numTarea++;
 			}
 			
-			return "Tareas creadas";
+			
+			return "Tareas Guardadas";
 			
 		} catch (MPXJException | IOException e) {
 			e.printStackTrace();

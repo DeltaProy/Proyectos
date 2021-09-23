@@ -1,8 +1,10 @@
 package com.deltasac.api.controller;
 
 import java.io.IOException;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +31,6 @@ import net.sf.mpxj.ProjectFile;
 import net.sf.mpxj.Task;
 import net.sf.mpxj.mpp.MPPReader;
 
-@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/proyectoHomologados")
 public class ProyectoHomologadosController {
@@ -42,8 +44,15 @@ public class ProyectoHomologadosController {
 		return serviceProyectoHonologados.buscarTodos();
 	}
 	
+	@GetMapping("/listar/{idProyecto}")
+	public List<ProyectoHomologado> buscarPorIdProyecto(@PathVariable("idProyecto") int idproyecto){
+		return serviceProyectoHonologados.listarPorIdProyecto(idproyecto);
+	}
+	
 	@PostMapping("/guardar")
 	public Object guardarHomolog(@RequestParam("file") MultipartFile file, @RequestParam("idproyecto") Integer idProyecto) {
+		List<ProyectoHomologado> existentes = serviceProyectoHonologados.listarPorIdProyecto(idProyecto);
+		
 		List<ProyectoHomologado> recursosNulos = new ArrayList<>();
 		List<String> nombres = new ArrayList<>();
 		//CREAR USUARIOS ges proy homolog
@@ -55,9 +64,11 @@ public class ProyectoHomologadosController {
 			for(Task task: pf.getTasks()) {
 				String nombre = "";
 				try {
-					nombre = task.getResourceAssignments().get(0).getResource().getName();//Cuando el recurso en el archivo esta vacio se demorara en responder ya que pasara por todos los errors							
+					nombre = task.getResourceAssignments().get(0).getResource().getName();							
 				} catch (Exception e) {
 				}
+				if(nombre == "") continue;
+				//Existe el ph?
 				ProyectoHomologado ph = serviceProyectoHonologados.buscarPorId(new ProyectoHomologadoPK(idProyecto, nombre));
 				if(ph == null) {
 					ph = new ProyectoHomologado();
@@ -73,9 +84,16 @@ public class ProyectoHomologadosController {
 						if(!nombres.contains(ph.getNomcorto())) {
 							recursosNulos.add(ph);
 							nombres.add(ph.getNomcorto());
+							existentes.remove(ph);
 						}
+					}else {
+						existentes.remove(ph);
 					}
 				}
+			}
+			
+			for(ProyectoHomologado ph: existentes) {
+				serviceProyectoHonologados.eliminar(new ProyectoHomologadoPK(ph.getIdproyecto(), ph.getNomcorto()));
 			}
 			
 		} catch (MPXJException | IOException e) {
@@ -88,7 +106,7 @@ public class ProyectoHomologadosController {
 	@PostMapping("/actualizar")
 	public Object actualizar(@RequestBody() ProyectoHomologado ph) {
 		try {
-			serviceProyectoHonologados.guardar(ph);
+			serviceProyectoHonologados.guardar(ph);				
 		}catch (Exception e) {
 			return "Error al actualizar el registro, revise si existe el id personal en la base de datos";
 		}

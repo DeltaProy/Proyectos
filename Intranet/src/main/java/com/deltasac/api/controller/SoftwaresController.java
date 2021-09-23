@@ -17,7 +17,6 @@ import com.deltasac.api.entity.Software;
 import com.deltasac.api.service.ISoftwaresService;
 import com.deltasac.api.service.ITiposSoftService;
 
-@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/softwares")
 public class SoftwaresController {

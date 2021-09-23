@@ -20,6 +20,11 @@ public class ProyectoRecursosService implements IProyectoRecursosService{
 	public List<ProyectoRecurso> buscarTodos() {
 		return repoProyectoRecurso.findAll();
 	}
+	
+	@Override
+	public List<ProyectoRecurso> buscarPorIdProyecto(int idProyecto) {
+		return repoProyectoRecurso.buscarPorIdProyecto(idProyecto);
+	}	
 
 	@Override
 	public void guardar(ProyectoRecurso proyectoRecurso) {
@@ -34,6 +39,7 @@ public class ProyectoRecursosService implements IProyectoRecursosService{
 	@Override
 	public ProyectoRecurso buscarPorId(ProyectoRecursoPK proyectoRecursoPK) {
 		return repoProyectoRecurso.findById(proyectoRecursoPK).orElse(null);
-	}	
+	}
+
 
 }

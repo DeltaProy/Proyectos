@@ -34,6 +34,11 @@ public class ProyectoHomologadosService implements IProyectoHomologadosService{
 	@Override
 	public ProyectoHomologado buscarPorId(ProyectoHomologadoPK proyectoHomologadoPK) {
 		return repoProyectoHomologado.findById(proyectoHomologadoPK).orElse(null);
+	}
+
+	@Override
+	public List<ProyectoHomologado> listarPorIdProyecto(int idproyecto) {
+		return repoProyectoHomologado.listarPorIdProyecto(idproyecto);
 	}	
 
 }

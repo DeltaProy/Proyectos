@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.deltasac.api.entity.Area;
 import com.deltasac.api.service.IAreaService;
 
-@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/area")
 public class AreaController {

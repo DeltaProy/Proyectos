@@ -19,7 +19,7 @@ import com.deltasac.api.service.IDireccionesService;
 import com.deltasac.api.service.ITiposDirecService;
 import com.deltasac.api.service.IUbigeosService;
 
-@CrossOrigin("http://173.255.202.95:8080")
+@CrossOrigin(origins = {"http://173.255.202.95:8080", "http://localhost:4200"})
 @RestController
 @RequestMapping("/direcciones")
 public class DireccionesController {

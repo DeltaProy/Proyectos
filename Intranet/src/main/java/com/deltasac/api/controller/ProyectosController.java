@@ -1,4 +1,4 @@
-package com.deltasac.api.controller;
+	package com.deltasac.api.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.deltasac.api.entity.Proyecto;
 import com.deltasac.api.entity.ProyectoTarea;
+import com.deltasac.api.entity.ProyectoRecurso;
 import com.deltasac.api.service.IEmpresasService;
+import com.deltasac.api.service.IProyectoRecursosService;
 import com.deltasac.api.service.IProyectoTareasService;
 import com.deltasac.api.service.IProyectosService;
 
@@ -32,7 +34,6 @@ import net.sf.mpxj.mpp.MPPReader;
 import net.sf.mpxj.reader.ProjectReader;
 import net.sf.mpxj.reader.UniversalProjectReader;
 
-@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/proyectos")
 public class ProyectosController {
@@ -43,6 +44,8 @@ public class ProyectosController {
 	private IProyectoTareasService serviceTarea;
 	@Autowired
 	private IEmpresasService serviceEmpresa;
+	@Autowired
+	private IProyectoRecursosService serviceProyectoRecurso;
 	
 	
 	@GetMapping("/listar")
@@ -50,11 +53,24 @@ public class ProyectosController {
 		return serviceProyecto.buscarTodos();
 	}
 	
+	@GetMapping("/listar/{idresponsable}")
+	public List<Proyecto> listarPorResponsable(@PathVariable("idresponsable") int idresponsable){
+		return serviceProyecto.listarProyectosPorResponsable(idresponsable);
+	}
+	
+	@GetMapping("/existe")
+	public boolean existeProyecto(@RequestParam("nombreproyecto") String nombreproyecto){
+		if(serviceProyecto.buscarPorNombre(nombreproyecto) != null) return true;
+		else return false;
+	}
+	
 	@PostMapping("/guardar")
-	public Object guardar(@RequestParam("file") MultipartFile file, @RequestParam("idempresa") Integer idEmpresa) {
+	public Object guardar(@RequestParam("file") MultipartFile file, @RequestParam("idempresa") Integer idEmpresa, @RequestParam("nombreproyecto") String nombreProyecto, @RequestParam("idpersonal") Integer idPersonal) {
 		if(serviceEmpresa.buscarPorId(idEmpresa) == null) {
 			return "El idEmpresa no existe en la base de datos";
 		}
+		
+		
 		
 		try {
 			MPPReader mppRead = new MPPReader();
@@ -63,12 +79,22 @@ public class ProyectosController {
 			//CREAR PROYECTO
 			Proyecto proyecto = new Proyecto();
 			proyecto.setIdEmpresa(idEmpresa);
-			proyecto.setDesproyecto(pf.getProjectProperties().getProjectTitle());
+			proyecto.setDesproyecto(nombreProyecto);
 			proyecto.setFecini(pf.getStartDate());
 			proyecto.setFecfin(pf.getFinishDate());
 			proyecto.setFecfinreal(pf.getProjectProperties().getActualFinish());
 			
 			serviceProyecto.guardar(proyecto);
+			
+			
+			//Guardar responsable
+			ProyectoRecurso responsable = new ProyectoRecurso();
+			responsable.setIdproyecto(proyecto.getIdproyecto());
+			responsable.setIdpersonal(idPersonal);
+			responsable.setTipo_recurso("RES");
+			
+			serviceProyectoRecurso.guardar(responsable);
+			
 			
 			return proyecto;
 			
@@ -80,19 +106,18 @@ public class ProyectosController {
 	}
 	
 	@PutMapping("/actualizar")
-	public Object actualizar(@RequestParam("file") MultipartFile file, @RequestParam("idproyecto") Integer idProyecto) {
+	public Object actualizar(@RequestParam("file") MultipartFile file, @RequestParam("nombreproyecto") String nombreProyecto) {
 		
-		Proyecto proyecto = serviceProyecto.buscarPorId(idProyecto);
+		Proyecto proyecto = serviceProyecto.buscarPorNombre(nombreProyecto);
 		
 		if(proyecto == null) {
-			return "El id del proyecto no existe";
+			return "El proyecto no existe";
 		}
 		
 		try {
 			MPPReader mppRead = new MPPReader();
 			ProjectFile pf = mppRead.read(file.getInputStream());
 			
-			proyecto.setDesproyecto(pf.getProjectProperties().getProjectTitle());
 			proyecto.setFecini(pf.getStartDate());
 			proyecto.setFecfin(pf.getFinishDate());
 			proyecto.setFecfinreal(pf.getProjectProperties().getActualFinish());

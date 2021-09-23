@@ -17,7 +17,6 @@ import com.deltasac.api.entity.Cargo;
 import com.deltasac.api.entity.CargoPK;
 import com.deltasac.api.service.ICargoService;
 
-@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/cargo")
 public class CargoController {

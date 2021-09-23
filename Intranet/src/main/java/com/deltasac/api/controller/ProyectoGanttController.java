@@ -31,7 +31,6 @@ import net.sf.mpxj.ProjectFile;
 import net.sf.mpxj.Task;
 import net.sf.mpxj.mpp.MPPReader;
 
-@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/proyectoGantt")
 public class ProyectoGanttController {

@@ -20,7 +20,6 @@ import com.deltasac.api.entity.TelefonoPK;
 import com.deltasac.api.service.ITelefonosService;
 import com.deltasac.api.service.ITiposTelfsService;
 
-@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/telefonos")
 public class TelefonosController {

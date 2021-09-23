@@ -13,9 +13,11 @@ public class ProyectoRecurso {
 	private Integer idproyecto;
 	@Id
 	private Integer idpersonal;
+	private String tipo_recurso;
 	private Date fecini_lab;
 	private Date fecfin_lab;
 	private Date fecfin_real;
+	
 	
 	public Integer getIdproyecto() {
 		return idproyecto;
@@ -28,6 +30,12 @@ public class ProyectoRecurso {
 	}
 	public void setIdpersonal(Integer idpersonal) {
 		this.idpersonal = idpersonal;
+	}
+	public String getTipo_recurso() {
+		return tipo_recurso;
+	}
+	public void setTipo_recurso(String tipo_recurso) {
+		this.tipo_recurso = tipo_recurso;
 	}
 	public Date getFecini_lab() {
 		return fecini_lab;
@@ -50,7 +58,8 @@ public class ProyectoRecurso {
 	
 	@Override
 	public String toString() {
-		return "ProyectoRecurso [idproyecto=" + idproyecto + ", idpersonal=" + idpersonal + ", fecini_lab=" + fecini_lab
-				+ ", fecfin_lab=" + fecfin_lab + ", fecfin_real=" + fecfin_real + "]";
+		return "ProyectoRecurso [idproyecto=" + idproyecto + ", idpersonal=" + idpersonal + ", tipo_recurso="
+				+ tipo_recurso + ", fecini_lab=" + fecini_lab + ", fecfin_lab=" + fecfin_lab + ", fecfin_real="
+				+ fecfin_real + "]";
 	}
 }

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.deltasac.api.entity.TipoDoc;
 import com.deltasac.api.service.ITiposDocsService;
 
-@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/tiposdocs")
 public class TiposDocsController {

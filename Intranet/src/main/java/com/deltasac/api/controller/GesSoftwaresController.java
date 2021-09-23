@@ -29,7 +29,6 @@ import com.deltasac.api.service.IGesSoftwaresService;
 import com.deltasac.api.service.ISoftwaresService;
 import com.deltasac.api.service.jpa.FileStorageService;
 
-@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/gessoftwares")
 public class GesSoftwaresController {

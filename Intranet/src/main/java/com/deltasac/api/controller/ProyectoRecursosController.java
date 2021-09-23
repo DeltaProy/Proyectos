@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,6 @@ import com.deltasac.api.entity.ProyectoRecursoPK;
 import com.deltasac.api.service.IProyectoRecursosService;
 import com.deltasac.api.service.IProyectosService;
 
-@CrossOrigin("http://173.255.202.95:8080")
 @RestController
 @RequestMapping("/proyectoRecursos")
 public class ProyectoRecursosController {
@@ -33,6 +33,11 @@ public class ProyectoRecursosController {
 	@GetMapping("/listar")
 	public List<ProyectoRecurso> buscarTodos(){
 		return serviceProyectoRecurso.buscarTodos();
+	}
+	
+	@GetMapping("/listar/{idProyecto}")
+	public List<ProyectoRecurso> buscarProIdProyecto(@PathVariable("idProyecto") int idProyecto){
+		return serviceProyectoRecurso.buscarPorIdProyecto(idProyecto);
 	}
 	
 	@PostMapping("/guardar")
@@ -53,8 +58,8 @@ public class ProyectoRecursosController {
 		return proyectoRecurso;
 	}
 	
-	@DeleteMapping("/eliminar")
-	public String eliminar(@RequestParam("idproyecto") Integer idproyecto, @RequestParam("idpersonal") Integer idpersonal) {
+	@DeleteMapping("/eliminar/{idproyecto}/{idpersonal}")
+	public String eliminar(@PathVariable("idproyecto") Integer idproyecto, @PathVariable("idpersonal") Integer idpersonal) {
 		serviceProyectoRecurso.eliminar(new ProyectoRecursoPK(idproyecto, idpersonal));
 		return "Registro eliminado";
 	}
